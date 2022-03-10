@@ -2,14 +2,14 @@ import E from 'wangeditor';
 
 const {$, BtnMenu, DropListMenu, PanelMenu, DropList, Panel, Tooltip} = E;
 
-class HTMLMenu extends BtnMenu {
+class HtmlMenu extends BtnMenu {
   status = false;
   htmlContent = '';
   constructor(editor) {
     // data-title属性表示当鼠标悬停在该按钮上时提示该按钮的功能简述
     const $elem = E.$(
       `<div class="w-e-menu" data-title="查看源码">
-              <button>html</button>
+              <button id="HtmlMenu">html</button>
           </div>`,
     );
     super($elem, editor);
@@ -19,11 +19,14 @@ class HTMLMenu extends BtnMenu {
     // 做任何你想做的事情
     // 可参考【常用 API】文档，来操作编辑器
     if (this.status) {
-      this.editor.txt.html(this.htmlContent);
+      this.htmlContent = '';
+      this.editor.txt.html(this.editor.$textElem.elems[0].innerText);
+      document.querySelector('#HtmlMenu').innerText = 'Html';
       this.status = false;
     } else {
       this.htmlContent = this.editor.txt.html();
       this.editor.$textElem.elems[0].innerText = this.htmlContent;
+      document.querySelector('#HtmlMenu').innerText = 'Text';
       this.status = true;
     }
   }
@@ -43,4 +46,4 @@ class HTMLMenu extends BtnMenu {
   }
 }
 
-export default HTMLMenu;
+export default HtmlMenu;
